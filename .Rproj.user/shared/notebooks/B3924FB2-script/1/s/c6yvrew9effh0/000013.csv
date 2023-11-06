@@ -1,0 +1,1 @@
+"0","iris |> select(-Species) |> head(10) |> kableExtra::kable(format = 'simple')"

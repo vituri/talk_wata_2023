@@ -1,0 +1,10 @@
+@article{tomato,
+author = {Chazal, Frédéric and Guibas, Leonidas and Oudot, Steve and Skraba, Primoz},
+year = {2011},
+month = {06},
+pages = {},
+title = {Persistence-Based Clustering in Riemannian Manifolds},
+volume = {60},
+journal = {Journal of the ACM},
+doi = {10.1145/1998196.1998212}
+}

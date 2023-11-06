@@ -1,0 +1,399 @@
+---
+title: "Argus IA"
+format:
+  revealjs:
+    preview-links: true
+    scrollable: true
+    theme: dark
+    footer: ""
+    logo: images/logo-argusvale.png
+    chalkboard: false
+    transition: slide
+    transition-speed: fast
+    self-contained: true
+---
+
+```{r, include=FALSE}
+library(vituripackage)
+listona = readRDS(file = 'listona')
+# temas:
+# beige
+# blood
+# dark
+# default
+# league
+# moon
+# night
+# serif
+# simple
+# sky
+# solarized
+
+# https://quarto.org/docs/presentations/revealjs/
+```
+
+
+# Objetivo
+
+. . .
+
+- Prever se e quando ocorrerá a próxima sonolência de um dado motorista num dado instante;
+
+. . .
+
+- Buscar padrões nos dados existentes de maneira sistematizada;
+
+. . .
+
+- ...Big data e Inteligência Artificial!
+
+# Reconhecimento facial
+
+## O problema
+
+. . .
+
+Agrupar milhões de fotos de acordo com o motorista:
+
+. . .
+
+- Problema de classificação de faces "in the wild", isto é, sem *labels*;
+
+. . .
+
+- Poses distintas (bocejando, com a mão na frente, atrás do volante, etc).
+
+## Vetorização das faces
+
+. . .
+
+Cada face se torna um elemento do espaço euclidiano $\mathbb{R}^{320}$
+
+![Clustering Millions of Faces by Identity, https://arxiv.org/abs/1604.00989](images/recfac1.png){fig-align="center"}
+
+## Clusterização dos vetores
+
+. . .
+
+Aplica-se então algoritmos de clusterização para juntar faces próximas
+
+![](images/recfac2.png){fig-align="center"}
+
+## Ganhos com o reconhecimento facial
+
+. . .
+
+- Histórico confiável de eventos **por motorista** sem depender de sistemas de telemetria e jornada;
+
+. . .
+
+- Histórico independe da operação/frota do motorista;
+
+. . .
+
+- Taxa de acerto superior a **99,9%**;
+
+. . .
+
+- Estimativa de idade, expressão facial e sentimentos.
+
+## Ranking de motoristas
+
+##  {background-color="black" background-image="images/ranking_motoristas.jpeg" background-size="contain"}
+
+## Report diário inteligente
+
+##  {background-iframe="images/Report diário - VALE_SLS FMA_VIX ref 2022-06-16 a 2022-06-30.html" background-interactive="true"}
+
+# Machine Learning
+
+## Os dados
+
+. .  .
+
+Mais de 300 mil eventos de sonolência de diversos países em mais de 4 anos de operação.
+
+. . .
+
+Cada sonolência é considerada um evento independente, e para cada uma delas calculamos:
+
+. . .
+
+- Quantos eventos de diversos tipos aconteceram na última hora (bocejos, sonolência, distração, etc);
+
+. . .
+
+- A faixa de velocidade, posição, mudanças de faixa, excesso de velocidade, etc;
+
+------------------------------------
+
+- O histórico dos últimos 7 dias do motorista (jornadas de acordo com o ciclo circadiano?);
+
+![](images/cluster_jornada.jpeg){fig-align="center"}
+
+-----------------------------
+
+
+- Por fim, calculamos também se **houve alguma sonolência na hora seguinte ao evento atual**.
+
+## Modelos que não servem
+
+. . .
+
+- Regressão linear e similares;
+
+. . .
+
+- Modelos sensíveis a *outliers*.
+
+## Decision tree
+
+. . .
+
+- Criar regras para dividir o conjunto de dados da melhor maneira possível;
+
+. . .
+
+- Quanto mais ramos a árvore tiver, mais regras a seguir e mais chances de acertar a predição;
+
+. . .
+
+- **Perigo de observar regras "inexistentes" no modelo**. 
+
+----------------------
+
+![](images/dt1.png){fig-align="center"}
+
+----------------------
+
+![](images/dt2.png){fig-align="center"}
+
+
+----------------------
+
+![](images/dt3.png){fig-align="center"}
+
+
+----------------------
+
+![](images/dt4.png){fig-align="center"}
+
+
+----------------------
+
+![](images/dt5.png){fig-align="center"}
+
+
+----------------------
+
+![](images/dt8.png){fig-align="center"}
+
+----------------------
+
+![](images/dt12.png){fig-align="center"}
+
+## Random forest
+
+. . .
+
+- Cria-se milhares de decision trees;
+
+. . .
+
+- Toma-se a média da decisão de cada uma.
+
+--------------------------------------------------------
+
+![](images/random-forest-diagram.svg){fig-align="center"}
+
+## XGBoost
+
+. . .
+
+Versão mais elaborada do random forest:
+
+. . .
+
+- O modelo aprende com os erros das árvores anteriores;
+
+. . .
+
+- Cada árvore tem um peso diferente;
+
+. . .
+
+- Otimização de uma função gradiente.
+
+## Neural network
+
+. . .
+
+- Usado em problemas difíceis e altamente não-lineares: classificação de imagens, segmentação de fotos, etc.
+
+. . .
+
+![](images/nn.webp){fig-align="center"}
+
+##  {background-iframe="https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.73039&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false" background-interactive="true"}
+
+## Acurácia dos modelos
+
+. . .
+
+Divide-se os dados em 2 conjuntos:
+
+. . .
+
+- Treino: onde o modelo irá aprender os padrões;
+
+. . .
+
+- Teste: dados inéditos onde o modelo tentará mostrar o que aprendeu.
+
+. . .
+
+Cross-validation + resamples.
+
+## Argus IA - Vale
+
+. . .
+
+Nosso modelo consiste de uma *ensemble* dos modelos anteriores:
+
+. . .
+
+-   Cada modelo "opina" sobre um evento;
+
+. . .
+
+-   Faz-se uma votação para decidir o veredito.
+
+--------------------------------------
+
+![](images/ensemble.png){fig-align="center"}
+
+# Argus IA: Resultados
+
+. . .
+
+-   Das sonolências que de fato aconteceram na hora seguinte, o modelo conseguiu prever **71%**;
+
+. . .
+
+- **Duas vezes mais** sonolências detectadas preventivamente, em comparação com o protocolo atual;
+
+. . .
+
+- Com isso, reduzir **pela metade** o número de sonolências.
+
+## O que o modelo "enxerga"?
+
+. . .
+
+Variáveis mais importantes para a tomada de decisão:
+
+. . .
+
+- Quão "bagunçado" está o ciclo circadiano do motorista na última semana;
+
+. . .
+
+- Quantidade de sonolências nos últimos 15 minutos;
+
+. . .
+
+- Quantidade de sonolências do motorista na mesma faixa de horário durante a semana anterior;
+
+. . .
+
+- Quantidade de distrações (inquietação);
+
+------------------------------
+
+
+- Faixa de horário;
+
+. . .
+
+- Quantidade de bocejos.
+
+# Exemplos
+
+------------------------------------
+
+- 2 sonolências; 20 distrações; 6 bocejos; 
+
+. . .
+
+- 4 da manhã;
+
+. . .
+
+- 30 sonolências na semana; 
+
+. . .
+
+- 9 sonolências na mesma faixa de horário na semana;
+
+. . .
+
+- Andando a 50km/h.
+
+. . .
+
+**Probabilidade de dormir na próxima hora: 92%.**
+
+--------------------------------------
+
+- 2 sonolências; 10 distrações; 0 bocejos; 
+
+. . .
+
+- 5 da manhã;
+
+. . .
+
+- jornada na semana com 4 faixas de horário de sonolência (muito variados);
+
+. . .
+
+- 7 sonolências na mesma faixa de horário na semana;
+
+. . .
+
+**Probabilidade de dormir na próxima hora: 89%.**
+
+# Implantação
+
+. . .
+
+- Desdobramento junto ao time/contratadas do novo protocolo de intervenção;
+
+. . .
+
+- Alinhamento junto ao time/contratadas das ações a serem tomadas, dos tempos de reação após a intervenção e da gestão de consequência;
+
+. . .
+
+- Sistema Argus em perfeito funcionamento (reduzir mau uso e mudança de posicionamento) – realização de check list e ação ativa do time de manutenção Argus.
+
+
+# Futuro
+
+. . .
+
+-   Tempo de jornada do motorista;
+
+. . .
+
+-   Análise de sentimentos (expressão de cansaço, desânimo, ansiedade, etc);
+
+. . .
+
+-   Dados de outras tecnologias embarcadas.
+
+------------------------------------------------------------------------
+
+::: r-fit-text
+Obrigado!
+:::

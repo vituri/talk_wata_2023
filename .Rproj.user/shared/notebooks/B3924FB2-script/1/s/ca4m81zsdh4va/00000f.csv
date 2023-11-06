@@ -1,0 +1,60 @@
+"0","library(vituripackage)"
+"2","Carregando pacotes exigidos: dplyr
+"
+"2","
+Attaching package: ‘dplyr’
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+"
+"2","Carregando pacotes exigidos: lubridate
+"
+"2","
+Attaching package: ‘lubridate’
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    date, intersect, setdiff, union
+
+"
+"2","Carregando pacotes exigidos: openxlsx
+"
+"2","Carregando pacotes exigidos: magrittr
+"
+"2","Carregando pacotes exigidos: echarts4r
+"
+"2","Carregando pacotes exigidos: glue
+"
+"2","Carregando pacotes exigidos: tidyr
+"
+"2","
+Attaching package: ‘tidyr’
+
+"
+"2","The following object is masked from ‘package:magrittr’:
+
+    extract
+
+"
+"2","Carregando pacotes exigidos: tictoc
+"
+"2","Carregando pacotes exigidos: purrr
+"
+"2","
+Attaching package: ‘purrr’
+
+"
+"2","The following object is masked from ‘package:magrittr’:
+
+    set_names
+
+"
