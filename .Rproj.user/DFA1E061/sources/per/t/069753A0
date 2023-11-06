@@ -1,9 +1,9 @@
 {
     "id": "069753A0",
-    "path": "~/Argus/Apresentações/Workshop topologia 2023/references.bib",
+    "path": "~/Documentos/GitHub/talk_wata_2023/references.bib",
     "project_path": "references.bib",
     "type": "text",
-    "hash": "3702501390",
+    "hash": "4201013371",
     "contents": "",
     "dirty": false,
     "created": 1699204817956.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "10,0",
+        "cursorPosition": "11,12",
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1699205391,
+    "lastKnownWriteTime": 1699285192,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1699205391703,
+    "last_content_update": 1699285192435,
     "read_only": false,
     "read_only_alternatives": []
 }

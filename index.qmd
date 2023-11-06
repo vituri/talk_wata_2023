@@ -24,6 +24,7 @@ format:
         self-contained: false
         incremental: true
         auto-animate: true
+        fig-responsive: true
     pptx: default
 ---
 
@@ -79,11 +80,9 @@ Means and percentage are cool, but we need more!
 
 ## Topology meets the real world
 
-**Topological Data Analysis** builds bridges
+**Topological Data Analysis** builds bridges from:
 
-<center>
-topological spaces => finite datasets:
-</center>
+- Topological spaces => finite datasets:
 
 - Homology => persistent homology;
 
@@ -146,7 +145,7 @@ An analog for "connectivity" in the discrete case.
 
 ## The ToMATo clustering algorithm
 
-In [@tomato], the authors define the ToMATo algorithm. The intuition is the following:
+In [@tomato], the authors define the ToMATo algorithm. The intuitive idea is the following:
 
 ## The ToMATo clustering algorithm
 
@@ -176,68 +175,251 @@ Create a proximity graph
 
 Chop the mountains! 
 
-Reindex $x_1, ..., x_n \in X$ from highest to lowest. 
+Reindex $x_1, ..., x_n \in X$ from highest to lowest.
 
 Start with $x = x_1$.
 
-```
-If no neighbor of $x$ is higher than $x$, then $x$ form a cluster $c_1$
+> If no neighbor of $x$ is higher than $x$, then $x$ form a cluster $c_1$
 
 otherwise
 
-$x$ will be assigned to the cluster of its highest neighbor.
-```
+> $x$ will be assigned to the cluster of its highest neighbor.
 
 Keep going until all $x \in X$ is assigned to a cluster.
+
+## Details
+:::: {.columns}
+::: {.column width="55%"}
+![](images/tomato-alg1){width=100%}
+:::
+::: {.column width="45%"}
+Arrange index set
+:::
+::::
+
+## x = x_1
+:::: {.columns}
+::: {.column width="55%"}
+![](images/tomato-alg2){width=100%}
+:::
+::: {.column width="45%"}
+no neighbor of $x_1$ is higher than $x_1$, then $x_1$ form a cluster $c_1$
+:::
+::::
+
+## x = x_2
+:::: {.columns}
+::: {.column width="55%"}
+![](images/tomato-alg3){width=100%}
+:::
+::: {.column width="45%"}
+no neighbor of $x_2$ is higher than $x_2$, then $x_2$ form a cluster $c_2$
+:::
+::::
+
+## x = x_3
+:::: {.columns}
+::: {.column width="55%"}
+![](images/tomato-alg4){width=100%}
+:::
+::: {.column width="45%"}
+$x_3$ will be assigned to the cluster of its highest neighbor, $c_1$
+:::
+::::
+
+## x = x_4
+:::: {.columns}
+::: {.column width="55%"}
+![](images/tomato-alg5){width=100%}
+:::
+::: {.column width="45%"}
+$x_4$ will be assigned to the cluster of its highest neighbor, $c_2$
+:::
+::::
 
 ## :(
 
 ![](images/tomato5.png){fig-align="center"}
 
-## False peaks
+## Throwing away the false peaks
 
-Use a parameter $\tau$ that will merge small peaks. 
+> If a neighbor of $x$ is a peak just a bit higher than $x$, then merge its cluster to the one of $x$.
 
-How? See [@tomato]!!
+## Measure
+:::: {.columns}
+::: {.column width="45%"}
+![](images/tomato-adjust1.png){width=100%}
+:::
+::: {.column width="55%"}
+$| \text{dens}(x_2) - \text{dens}(x_3) | < \tau;$
+:::
+::::
 
-## Final result
+## Merge
+:::: {.columns}
+::: {.column width="55%"}
+![](images/tomato-adjust2.png){width=100%}
+:::
+::: {.column width="45%"}
+$x_2$ and $x_4$ are assigned to $c_1$.
+:::
+::::
+
+## Final result with $\tau$ = 0.02
 
 ![](images/tomato6.png){fig-align="center"}
 
-## Changing parameters
+## Result with $\tau$ = 0.04
 
 ![](images/tomato7.png){fig-align="center"}
 
-## ToMATo: two spirals with noise
+## ToMATo: two spirals with noise 
 
-##  {background-image="images/spiral1.png" background-size="contain"}
+```{r, warning=FALSE, fig.align='center'}
+library(magick)
+imgs = 
+  paste0('images/spiral', 1:4, '.png') %>% 
+  purrr::map(image_read) %>% 
+  purrr::map(\(x) image_scale(x, "500x400")
+  )
 
-##  {background-image="images/spiral2.png" background-size="contain"}
-
-##  {background-image="images/spiral3.png" background-size="contain"}
-
-##  {background-image="images/spiral4.png" background-size="contain"}
-
-## ToMATo: several components with noise
-
-## {background-image="images/toy1.png" background-size="contain"}
-
-## {background-image="images/toy2.png" background-size="contain"}
-
-## {background-image="images/toy3.png" background-size="contain"}
-
-## {background-image="images/toy4.png" background-size="contain"}
+image_append(
+  c(
+    image_append(c(imgs[[1]], imgs[[2]]))
+    ,image_append(c(imgs[[3]], imgs[[4]]))
+  )
+  ,stack = TRUE
+)
+```
 
 
+## ToMATo: components with noise {.r-stretch}
+
+```{r, fig.align='center'}
+imgs = 
+  paste0('images/toy', 1:4, '.png') %>% 
+  purrr::map(image_read) %>% 
+  purrr::map(\(x) image_scale(x, "500x400"))
+
+image_append(
+  c(
+    image_append(c(imgs[[1]], imgs[[2]]))
+    ,image_append(c(imgs[[3]], imgs[[4]]))
+  )
+  ,stack = TRUE
+)
+
+```
 
 
 # Problem 2: signatures
 
 **Objective**: given a complicated object $X$, create a simpler object $S(X)$ which can give information about $X$.
 
-Example: $X$ and $Y$ are hard to compare, but $S(X) \neq S(Y)$ implies $X \neq Y$. 
+. . .
 
-Think of $S$ as a functor!
+Example: $X$ and $Y$ are hard to compare, but 
+
+$$
+S(X) \neq S(Y) \Rightarrow X \neq Y.
+$$ 
+
+## Connected components
+
+Clustering algorithms depend on several parameters.
+
+. . .
+
+Is there a more natural way to count connected components on finite sets?
+
+## From finite to infinite
+
+- Put a ball of radius $\epsilon$ in each point of $X$ and make $\epsilon$ vary.
+
+- Count the connected components for each $\epsilon$.
+
+![](images/filtration.png)
+
+## Dendrograms
+
+A dendrogram represents the birth and death of each connected component. It is *agglomerative*.
+
+```{r}
+#| layout-ncol: 2
+#| fig-width: 5
+#| fig-height: 4
+
+n = 25
+X = rbind(
+  runif(200) |> matrix(ncol = 2)
+  ,runif(200, min = 1.2, max = 2.2) |> matrix(ncol = 2)
+)
+
+hc = hclust(dist(X, method = 'euclidean'), method = 'single')
+
+plot(X)
+plot(hc, labels = FALSE, hang = -1)
+```
+
+## Enters topology
+
+- Connected components are measured by the $H_0$ functor.
+
+- Dendrograms keep track of $H_0$ generators.
+
+- Can we use $H_n$ instead of $H_0$???????????????
+
+## Persistent homology
+
+Given a family of simplicial complexes
+
+$$
+K_0 \hookrightarrow K_1 \hookrightarrow \cdots \hookrightarrow K_n
+$$
+
+. . .
+
+apply homology $H_p$ over a field $\mathbb{K}$
+
+$$
+H_p(K_0) \rightarrow H_p(K_1) \rightarrow \cdots \rightarrow H_p(K_n)
+$$
+
+to obtain a sequence of vector spaces and linear maps, called a *persistence module*.
+
+## Barcodes
+
+A persistence module $\mathbb{V}$ can be decomposed as a sum of *interval modules*, which gives us a multiset of intervals called *barcode*
+
+$$
+\text{dgm}(\mathbb{V}) = \{[b, d); \; (b, d) \in A\}.
+$$
+
+Each interval $[b, d) \in \text{dgm}(\mathbb{V})$ can be seem as a generator of $H_p$ (ie. a $p$-dimensional hole) that was "born" at $K_b$ and "died" at $K_d$.
+
+## Birth and death of "holes"
+
+![](images/barcode.png){fig-align="center"}
+
+## Stability
+
+Small changes in $X$ will change just a little of the barcodes. 
+
+Theorem (!! referencia): given $X$ and $Y$ finite metric spaces,
+
+$$
+d_b(\text{dgm}(X), \text{dgm}(Y)) \leq d_{GH}(X, Y).
+$$
+
+. . .
+
+Thus:
+
+$$
+d_b(\text{dgm}(X), \text{dgm}(Y)) \; \text{is big} \Rightarrow \\ 
+\text{$X$ and $Y$ are very different}.
+$$
+
 
 # Problem 3: dimensionality reduction
 
@@ -260,9 +442,9 @@ Given a topological space $X$ and a map $f: X \to \mathbb{R}$, define $\sim$ on 
 
 $$
 p \sim q \Leftrightarrow
-  \text{$p, q \in f^{-1}(c)$} \\ \text{for some $c \in \mathbb{R}$.}
+\text{$p, q \in f^{-1}(c)$} \\ \text{for some $c \in \mathbb{R}$.}
 $$
- 
+
 The Reeb Graph of $(X, f)$ is the quotient $X / \sim$
 :::
 ::::
@@ -341,8 +523,12 @@ To adapt the Reeb graph to the finite case, we need to change:
 # Closing remarks
 
 - Study topology;
+
 - Study data science;
-- Most important: **combine both**.
+
+- Learn to code! Start with Julia, Python or R.
+
+- Most important: **combine the three above**.
 
 ## rascunho
 
