@@ -412,11 +412,9 @@ Guilherme Vituri F. Pinto*, Laura R. Gambera**
 </section>
 <section id="topology-meets-the-real-world" class="slide level2">
 <h2>Topology meets the real world</h2>
-<p><strong>Topological Data Analysis</strong> builds bridges</p>
-<center>
-topological spaces =&gt; finite datasets:
-</center>
+<p><strong>Topological Data Analysis</strong> builds bridges from:</p>
 <ul>
+<li class="fragment"><p>Topological spaces =&gt; finite datasets:</p></li>
 <li class="fragment"><p>Homology =&gt; persistent homology;</p></li>
 <li class="fragment"><p>Reeb graph =&gt; mapper graph;</p></li>
 <li class="fragment"><p>Connected components =&gt; single-linkage clustering.</p></li>
@@ -466,7 +464,7 @@ topological spaces =&gt; finite datasets:
 </section>
 <section id="the-tomato-clustering-algorithm" class="slide level2">
 <h2>The ToMATo clustering algorithm</h2>
-<p>In <span class="citation" data-cites="tomato">(<a href="#/references" role="doc-biblioref" onclick="">Chazal et al. 2011</a>)</span>, the authors define the ToMATo algorithm. The intuitive idea is the following:</p>
+<p>In <span class="citation" data-cites="tomato">(<a href="#/references" role="doc-biblioref" onclick="">Chazal et al. 2011</a>)</span>, the authors define the <em>Topological Mode Analysis Tool</em>, or <em>ToMATo</em> algorithm. The intuitive idea is the following:</p>
 </section>
 <section id="the-tomato-clustering-algorithm-1" class="slide level2">
 <h2>The ToMATo clustering algorithm</h2>
@@ -476,7 +474,7 @@ topological spaces =&gt; finite datasets:
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="images/tomato-guess.png" class="img-fluid"></p>
-<figcaption>Find poins in the most dense regions</figcaption>
+<figcaption>Find poins in the most dense regions.</figcaption>
 </figure>
 </div>
 </div>
@@ -484,7 +482,7 @@ topological spaces =&gt; finite datasets:
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="images/tomato-guess2.png" class="img-fluid"></p>
-<figcaption>Build the perimeter</figcaption>
+<figcaption>Build the perimeter by a hill-climbing method.</figcaption>
 </figure>
 </div>
 </div>
@@ -636,11 +634,17 @@ S(X) \neq S(Y) \Rightarrow X \neq Y.
 <section id="from-finite-to-infinite" class="slide level2">
 <h2>From finite to infinite</h2>
 <ul>
-<li class="fragment"><p>Put a ball of radius <span class="math inline">\(\epsilon\)</span> in each point of <span class="math inline">\(X\)</span> and make <span class="math inline">\(\epsilon\)</span> vary.</p></li>
-<li class="fragment"><p>Count the connected components for each <span class="math inline">\(\epsilon\)</span>.</p></li>
+<li class="fragment"><p>Center a ball of radius <span class="math inline">\(\epsilon\)</span> in each point of <span class="math inline">\(X\)</span> and make <span class="math inline">\(\epsilon\)</span> vary.</p></li>
+<li class="fragment"><p>Call <span class="math inline">\(X_\epsilon\)</span> the union of these balls, and <span class="math inline">\(K_\epsilon\)</span> the nerve of <span class="math inline">\(X_\epsilon\)</span>.</p></li>
+<li class="fragment"><p>Count the connected components of <span class="math inline">\(X_\epsilon\)</span> or <span class="math inline">\(K_\epsilon\)</span> for each <span class="math inline">\(\epsilon\)</span>.</p></li>
 </ul>
 
 <img data-src="images/filtration.png" class="img-fluid r-stretch"></section>
+<section id="vietoris-rips-complex" class="slide level2">
+<h2>Vietoris-Rips complex</h2>
+<p>In the previous construction, <span class="math inline">\(K_\epsilon\)</span> is called the <em>Vietoris-Rips</em> complex of <span class="math inline">\(X\)</span> at parameter <span class="math inline">\(\epsilon\)</span>.</p>
+
+<img data-src="images/vietoris-rips.png" class="img-fluid r-stretch quarto-figure-center"></section>
 <section id="dendrograms" class="slide level2">
 <h2>Dendrograms</h2>
 <p>A dendrogram represents the birth and death of each connected component. It is <em>agglomerative</em>.</p>
@@ -702,6 +706,78 @@ d_b(\text{dgm}(X), \text{dgm}(Y)) \leq d_{GH}(X, Y).
 d_b(\text{dgm}(X), \text{dgm}(Y)) \; \text{is big} \Rightarrow \\
 \text{$X$ and $Y$ are very different}.
 \]</span></p>
+</div>
+</section>
+<section id="the-complex-factory" class="slide level2">
+<h2>The complex factory</h2>
+<p>There are several way to build sequences of complex:</p>
+<ul>
+<li class="fragment"><p>Vietoris-Rips, Čech, Alpha complex;</p></li>
+<li class="fragment"><p>Sub-level or super-level filtration.</p></li>
+</ul>
+</section>
+<section id="sublevel-filtration" class="slide level2">
+<h2>Sublevel filtration</h2>
+<p>Given <span class="math inline">\(f: X \to \mathbb{R}\)</span>, consider for any <span class="math inline">\(\epsilon \in \mathbb{R}\)</span> the inverse image <span class="math display">\[
+X_\epsilon = f^{-1}((-\infty, \epsilon])
+\]</span> and proceed to calculate its persistent homology.</p>
+
+<img data-src="images/sublevel2.png" class="img-fluid r-stretch quarto-figure-center"><p class="caption">Source: <span class="citation" data-cites="ripserer">(<a href="#/references" role="doc-biblioref" onclick="">Čufar 2022</a>)</span></p></section>
+<section id="using" class="slide level2">
+<h2>Using!</h2>
+<p>!!! We can use the distance between barcodes as an approximation of the distance between spaces.</p>
+</section>
+<section id="the-magic-of-vectors" class="slide level2">
+<h2>The magic of vectors</h2>
+<p>Machine learning algorithms need vectors (or matrices) of a fixed size as input.</p>
+<p>So, in order to use barcodes in machine learning, we need to vectorize them!</p>
+</section>
+<section id="from-barcodes-to-matrices" class="slide level2 smaller">
+<h2>From barcodes to matrices</h2>
+<p>One successful construction <span class="citation" data-cites="adams2017persistence">(<a href="#/references" role="doc-biblioref" onclick="">Adams et al. 2017</a>)</span> is the <em>persistence image</em>. The idea is the following:</p>
+<ul>
+<li class="fragment"><p>Plot the persistence diagram;</p></li>
+<li class="fragment"><p>Put gaussians around each point;</p></li>
+<li class="fragment"><p>Pixelate them.</p></li>
+</ul>
+
+<img data-src="images/persistence-images.png" class="img-fluid r-stretch quarto-figure-center"></section>
+<section id="example" class="slide level2">
+<h2>Example</h2>
+<p>Using persistence homology to classify hand-written digits (see <span class="citation" data-cites="tda_with_julia">(<a href="#/references" role="doc-biblioref" onclick="">Vituri 2024</a>)</span> for details).</p>
+
+<img data-src="images/digits.png" class="img-fluid r-stretch quarto-figure-center"></section>
+<section id="steps" class="slide level2">
+<h2>Steps</h2>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/digits2.svg" class="img-fluid"></p>
+<figcaption>1) Calculate a density estimator</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/digits3.png" class="img-fluid"></p>
+<figcaption>2) Do sublevel filtration</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/digits3.png" class="img-fluid"></p>
+<figcaption>3) Do sublevel filtration</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </div>
 </section></section>
 <section>
@@ -815,29 +891,26 @@ p \sim q \Leftrightarrow
 </div>
 </div>
 </section></section>
-<section>
 <section id="closing-remarks" class="title-slide slide level1 center">
 <h1>Closing remarks</h1>
 <ul>
-<li class="fragment">Study topology;</li>
-<li class="fragment">Study data science;</li>
-<li class="fragment">Most important: <strong>combine both</strong>.</li>
+<li class="fragment"><p>Study topology;</p></li>
+<li class="fragment"><p>Study data analysis;</p></li>
+<li class="fragment"><p>Learn to code! Start with Julia, Python or R.</p></li>
+<li class="fragment"><p>Most important: <strong>combine the three above</strong>.</p></li>
 </ul>
 </section>
-<section id="rascunho" class="slide level2">
-<h2>rascunho</h2>
-<ul>
-<li class="fragment"><p>Measurements of face (eyes, mouth)</p></li>
-<li class="fragment"><p>Presence of noise</p></li>
-<li class="fragment"><p>The “center” of each cluster has more points close to it</p></li>
-<li class="fragment"><p>Split it into <span class="math inline">\(n\)</span> clusters</p></li>
-</ul>
-<p>https://vituri.github.io/TDA_with_julia/tomato.html</p>
-<p>medições da face em fotos</p>
-<p>eixo x e y: distância entre os olhos e tamanho da boca</p>
-<p>uma medida real no meio e pequenos erros em volta o meio é o centro que origina aquelas medidas próximas</p>
-<p>distribuição normal!</p>
-</section></section>
+
+<section id="section-7" class="title-slide slide level1 center">
+<h1>…</h1>
+
+</section>
+
+<section id="section-8" class="title-slide slide level1 center">
+<h1>……………….</h1>
+
+</section>
+
 <section>
 <section id="obrigado" class="title-slide slide level1 center">
 <h1>Obrigado!!</h1>
@@ -851,8 +924,17 @@ p \sim q \Leftrightarrow
 
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-adams2017persistence" class="csl-entry" role="listitem">
+Adams, Henry, Tegan Emerson, Michael Kirby, Rachel Neville, Chris Peterson, Patrick Shipman, Sofya Chepushtanova, Eric Hanson, Francis Motta, and Lori Ziegelmeier. 2017. <span>“Persistence Images: A Stable Vector Representation of Persistent Homology.”</span> <em>Journal of Machine Learning Research</em> 18.
+</div>
 <div id="ref-tomato" class="csl-entry" role="listitem">
 Chazal, Frédéric, Leonidas Guibas, Steve Oudot, and Primoz Skraba. 2011. <span>“Persistence-Based Clustering in Riemannian Manifolds.”</span> <em>Journal of the ACM</em> 60 (June). <a href="https://doi.org/10.1145/1998196.1998212">https://doi.org/10.1145/1998196.1998212</a>.
+</div>
+<div id="ref-ripserer" class="csl-entry" role="listitem">
+Čufar, Matija. 2022. <span>“Ripserer.jl: Efficient Computation of Persistent Homology.”</span> <a href="https://github.com/mtsch/Ripserer.jl">https://github.com/mtsch/Ripserer.jl</a>.
+</div>
+<div id="ref-tda_with_julia" class="csl-entry" role="listitem">
+Vituri, Guilherme. 2024. <em>Topological Data Analysis with Julia</em>. <a href="https://vituri.github.io/TDA_with_julia/">https://vituri.github.io/TDA_with_julia/</a>.
 </div>
 </div>
 </section></section>

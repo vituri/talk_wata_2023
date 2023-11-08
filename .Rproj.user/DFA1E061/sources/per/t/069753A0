@@ -3,7 +3,7 @@
     "path": "~/Documentos/GitHub/talk_wata_2023/references.bib",
     "project_path": "references.bib",
     "type": "text",
-    "hash": "4201013371",
+    "hash": "2422366330",
     "contents": "",
     "dirty": false,
     "created": 1699204817956.0,
@@ -12,15 +12,15 @@
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "11,12",
-        "scrollLine": "0"
+        "cursorPosition": "37,9",
+        "scrollLine": "11"
     },
     "folds": "",
-    "lastKnownWriteTime": 1699285192,
+    "lastKnownWriteTime": 1699417034,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1699285192435,
+    "last_content_update": 1699417034859,
     "read_only": false,
     "read_only_alternatives": []
 }

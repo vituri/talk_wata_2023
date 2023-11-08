@@ -145,14 +145,14 @@ An analog for "connectivity" in the discrete case.
 
 ## The ToMATo clustering algorithm
 
-In [@tomato], the authors define the ToMATo algorithm. The intuitive idea is the following:
+In [@tomato], the authors define the *Topological Mode Analysis Tool*, or *ToMATo* algorithm. The intuitive idea is the following:
 
 ## The ToMATo clustering algorithm
 
 ::: {layout-ncol=2}
-![Find poins in the most dense regions](images/tomato-guess.png)
+![Find poins in the most dense regions.](images/tomato-guess.png)
 
-![Build the perimeter](images/tomato-guess2.png)
+![Build the perimeter by a hill-climbing method.](images/tomato-guess2.png)
 :::
 
 ## Step 1
@@ -334,11 +334,19 @@ Is there a more natural way to count connected components on finite sets?
 
 ## From finite to infinite
 
-- Put a ball of radius $\epsilon$ in each point of $X$ and make $\epsilon$ vary.
+- Center a ball of radius $\epsilon$ in each point of $X$ and make $\epsilon$ vary. 
 
-- Count the connected components for each $\epsilon$.
+- Call $X_\epsilon$ the union of these balls, and $K_\epsilon$ the nerve of $X_\epsilon$.
+
+- Count the connected components of $X_\epsilon$ or $K_\epsilon$ for each $\epsilon$.
 
 ![](images/filtration.png)
+
+## Vietoris-Rips complex
+
+In the previous construction, $K_\epsilon$ is called the *Vietoris-Rips* complex of $X$ at parameter $\epsilon$.
+
+![](images/vietoris-rips.png){fig-align="center"}
 
 ## Dendrograms
 
@@ -419,6 +427,64 @@ $$
 d_b(\text{dgm}(X), \text{dgm}(Y)) \; \text{is big} \Rightarrow \\ 
 \text{$X$ and $Y$ are very different}.
 $$
+
+## The complex factory
+
+There are several way to build sequences of complex:
+
+- Vietoris-Rips, Čech, Alpha complex;
+
+- Sub-level or super-level filtration.
+
+## Sublevel filtration
+
+Given $f: X \to \mathbb{R}$, consider for any $\epsilon \in \mathbb{R}$ the inverse image
+$$
+X_\epsilon = f^{-1}((-\infty, \epsilon])
+$$
+and proceed to calculate its persistent homology.
+
+![Source: [@ripserer]](images/sublevel2.png){fig-align="center"}
+
+## Using!
+
+!!! We can use the distance between barcodes as an approximation of the distance between spaces.
+
+## The magic of vectors
+
+Machine learning algorithms need vectors (or matrices) of a fixed size as input.
+
+So, in order to use barcodes in machine learning, we need to vectorize them!
+
+## From barcodes to matrices {.smaller}
+
+One successful construction [@adams2017persistence] is the *persistence image*. The idea is the following:
+
+- Plot the persistence diagram;
+
+- Put gaussians around each point;
+
+- Pixelate them.
+
+![](images/persistence-images.png){fig-align="center"}
+
+## Example
+
+Using persistence homology to classify hand-written digits (see [@tda_with_julia] for details).
+
+![](images/digits.png){fig-align="center"}
+
+## Steps
+
+::: {layout="[[1,1], [1]]"}
+![1) Calculate a density estimator](images/digits2.svg)
+
+![2) Do superlevel filtration](images/digits3.png)
+
+![3) Do sublevel filtration](images/digits3.png)
+
+
+:::
 
 
 # Problem 3: dimensionality reduction
@@ -524,35 +590,15 @@ To adapt the Reeb graph to the finite case, we need to change:
 
 - Study topology;
 
-- Study data science;
+- Study data analysis;
 
 - Learn to code! Start with Julia, Python or R.
 
 - Most important: **combine the three above**.
 
-## rascunho
+# ...
 
-- Measurements of face (eyes, mouth)
-
-- Presence of noise
-
-- The "center" of each cluster has more points close to it
-
-- Split it into $n$ clusters
-
-
-
-
-https://vituri.github.io/TDA_with_julia/tomato.html
-
-medições da face em fotos
-
-eixo x e y: distância entre os olhos e tamanho da boca
-
-uma medida real no meio e pequenos erros em volta
-o meio é o centro que origina aquelas medidas próximas
-
-distribuição normal!
+# ...................
 
 # Obrigado!!
 
