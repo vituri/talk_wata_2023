@@ -733,6 +733,8 @@ Looking from above, the mapper algorithm consists of two steps:
 1) (covering step) Given a metric space $(X, d)$, create a covering $C$ of $X$;
 1) (nerve step) Using $C$ as vertex set, create a graph.
 
+. . .
+
 In the classical mapper context, $C$ is generated using the clustering of pre-images of a function $f: X \to \mathbb{R}$. 
 
 ## Ball mapper
@@ -777,8 +779,6 @@ Study TDA in the context of other algorithms which are already popular.
 
 ## Advice from an old man
 
-. . .
-
 - Study topology;
 
 - Study data analysis;
@@ -800,5 +800,3 @@ Apply TDA!
 # Obrigado!!
 
 ## References
-
-<!-- http://education.knoweng.org/clustereng/algorithms.php#comparison -->
