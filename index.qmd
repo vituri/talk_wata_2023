@@ -54,15 +54,20 @@ Means and percentage are cool, but we need more!
 
 - Example: why drivers sleep more on Thursday?
 
-## Insights from topology
+## A lazy topologist
 
 :::: {.columns}
 
 ::: {.column width="60%"}
+
+"Mr. Topologist, can you analyse this dataset for me?"
+
 ![](images/dataset1.png)
 :::
 
 ::: {.column width="40%"}
+
+- Of course!
 
 - discrete space;
 
@@ -70,7 +75,9 @@ Means and percentage are cool, but we need more!
 
 - trivial $H_n$ for $n > 0$;
 
-- call it a day and go to sleep.
+- call it a day;
+
+- sleep like a baby.
 
 :::
 
@@ -78,7 +85,7 @@ Means and percentage are cool, but we need more!
 
 ##  {background-image="images/baby.jpg" background-size="contain" footer=false}
 
-## Topology meets the real world
+## Geometry in the real world
 
 **Topological Data Analysis** builds bridges from:
 
