@@ -83,7 +83,7 @@ Means and percentage are cool, but we need more!
 
 ::::
 
-##  {background-image="images/baby.jpg" background-size="contain" footer=false}
+<!-- ##  {background-image="images/baby.jpg" background-size="contain" footer=false} -->
 
 ## Geometry in the real world
 
